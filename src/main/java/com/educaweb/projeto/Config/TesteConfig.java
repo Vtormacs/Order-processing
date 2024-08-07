@@ -1,5 +1,6 @@
 package com.educaweb.projeto.Config;
 
+import com.educaweb.projeto.Entity.Enum.OrderStatus;
 import com.educaweb.projeto.Entity.Order;
 import com.educaweb.projeto.Entity.User;
 import com.educaweb.projeto.Repository.OrderRepository;
@@ -30,10 +31,10 @@ public class TesteConfig implements CommandLineRunner {
         User u3 = new User(null, "Vitor Eduardo Lopes Francisco", "vitor@gmail.com", "45998375761", "123456");
         this.userRepository.saveAll(Arrays.asList(u1,u2,u3));
 
-        Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1);
-        Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2);
-        Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u1);
-        Order o4 = new Order(null, Instant.parse("2019-08-21T15:21:42Z"), u3);
+        Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), OrderStatus.PAID,u1);
+        Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENT,u2);
+        Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT,u1);
+        Order o4 = new Order(null, Instant.parse("2019-08-21T15:21:42Z"), OrderStatus.CANCELED,u3);
         this.orderRepository.saveAll(Arrays.asList(o1,o2,o3,o4));
     }
 }

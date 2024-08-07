@@ -1,8 +1,10 @@
 package com.educaweb.projeto.Config;
 
+import com.educaweb.projeto.Entity.Category;
 import com.educaweb.projeto.Entity.Enum.OrderStatus;
 import com.educaweb.projeto.Entity.Order;
 import com.educaweb.projeto.Entity.User;
+import com.educaweb.projeto.Repository.CategoryRepository;
 import com.educaweb.projeto.Repository.OrderRepository;
 import com.educaweb.projeto.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class TesteConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -36,6 +41,12 @@ public class TesteConfig implements CommandLineRunner {
         Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENT,u1);
         Order o4 = new Order(null, Instant.parse("2019-08-21T15:21:42Z"), OrderStatus.CANCELED,u3);
         this.orderRepository.saveAll(Arrays.asList(o1,o2,o3,o4));
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+        this.categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
+
     }
 }
 

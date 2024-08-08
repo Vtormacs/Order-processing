@@ -13,9 +13,11 @@ import java.util.Set;
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Setter
     private String name;
 
     @JsonIgnore
@@ -35,16 +37,8 @@ public class Category implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Set<Product> getProducts() {

@@ -1,5 +1,6 @@
 package com.educaweb.projeto.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Paymant implements Serializable {
     private Long id;
     private Instant moment;
 
+    @JsonIgnore
     @OneToOne
     @MapsId
     private Order order;

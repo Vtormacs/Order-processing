@@ -5,6 +5,7 @@ import com.educaweb.projeto.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,10 +16,49 @@ public class UserService {
     private UserRepository userRepository;
 
     public List<User> findAll() {
-        return userRepository.findAll();
+        try {
+            return this.userRepository.findAll();
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar todos os usuarios: " + e.getMessage());
+            return Collections.emptyList();
+        }
     }
 
-    public User findById(Long id){
-        return this.userRepository.findById(id).get();
+    public User findById(Long id) {
+        try {
+            Optional<User> user = this.userRepository.findById(id);
+            return user.orElse(null);
+        } catch (Exception e) {
+            System.out.println("Erro ao procurar o usuario com ID " + id + ": " + e.getMessage());
+            return new User();
+        }
+    }
+
+    public User save(User user) {
+        try {
+            return this.userRepository.save(user);
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar o usuario: " + e.getMessage());
+            return new User();
+        }
+    }
+
+    public User update(User user, Long id) {
+        try {
+            user.setId(id);
+            return this.userRepository.save(user);
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar o usuario: " + e.getMessage());
+            return new User();
+        }
+    }
+
+    public String delete(Long id) {
+        try {
+            this.userRepository.deleteById(id);
+            return "Deletado";
+        } catch (Exception e) {
+            return "Erro ao deletar usuario";
+        }
     }
 }

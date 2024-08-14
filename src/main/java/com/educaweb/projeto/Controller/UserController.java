@@ -5,10 +5,7 @@ import com.educaweb.projeto.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +19,7 @@ public class UserController {
     @GetMapping("/findAll")
     public ResponseEntity<List<User>> findAll() {
         try {
-            List<User> list = this.userService.findAll();
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            return new ResponseEntity<>(this.userService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
@@ -34,6 +30,33 @@ public class UserController {
         try {
             User user = this.userService.findById(id);
             return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<User> save(@RequestBody User user) {
+        try {
+            return new ResponseEntity<>(this.userService.save(user), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(this.userService.update(user, id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable long id) {
+        try {
+            return new ResponseEntity<>(this.userService.delete(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }

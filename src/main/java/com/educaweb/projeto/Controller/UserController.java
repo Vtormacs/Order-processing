@@ -27,12 +27,8 @@ public class UserController {
 
     @GetMapping("/findById/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
-        try {
             User user = this.userService.findById(id);
             return new ResponseEntity<>(user, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
     }
 
     @PostMapping("/save")

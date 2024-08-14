@@ -2,6 +2,7 @@ package com.educaweb.projeto.Service;
 
 import com.educaweb.projeto.Entity.User;
 import com.educaweb.projeto.Repository.UserRepository;
+import com.educaweb.projeto.Service.Exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,8 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        try {
-            Optional<User> user = this.userRepository.findById(id);
-            return user.orElse(null);
-        } catch (Exception e) {
-            System.out.println("Erro ao procurar o usuario com ID " + id + ": " + e.getMessage());
-            return new User();
-        }
+        Optional<User> user = this.userRepository.findById(id);
+        return user.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User save(User user) {
